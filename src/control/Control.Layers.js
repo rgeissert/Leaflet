@@ -142,17 +142,23 @@ L.Control.Layers = L.Control.extend({
 	_onInputClick: function () {
 		var i, input, obj,
 			inputs = this._form.getElementsByTagName('input'),
-			inputsLen = inputs.length;
+			inputsLen = inputs.length,
+			checked;
 
 		for (i = 0; i < inputsLen; i++) {
 			input = inputs[i];
 			obj = this._layers[input.layerId];
 
 			if (input.checked) {
-				this._map.addLayer(obj.layer, !obj.overlay);
-			} else {
-				this._map.removeLayer(obj.layer);
+			    checked.push(obj);
 			}
+
+			this._map.removeLayer(obj.layer);
+		}
+
+		for (i = 0; i < checked.length; i++) {
+			obj = checked[i];
+			this._map.addLayer(obj.layer, !obj.overlay);
 		}
 	},
 
